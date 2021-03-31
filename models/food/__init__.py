@@ -16,6 +16,7 @@ class Food():
 
     def draw(self, window):
         if self.eaten:
+            self.eaten = False
             self.placeRandom()
 
         pygame.draw.rect(window, (230, 0, 0), pygame.Rect(self.posX * self.square_size, self.posY * self.square_size, self.square_size, self.square_size))

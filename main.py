@@ -31,7 +31,8 @@ window = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 grid = Grid(window, SCREEN_WIDTH, SCREEN_HEIGHT, SQUARE_SIZE)
 snake = Snake(snake_pos_x, snake_pos_y, snake_dir, SQUARE_SIZE)
-food = Food(15, 15, SCREEN_WIDTH / SQUARE_SIZE, SCREEN_HEIGHT / SQUARE_SIZE, SQUARE_SIZE)
+food = Food(15, 15, SCREEN_WIDTH / SQUARE_SIZE,
+            SCREEN_HEIGHT / SQUARE_SIZE, SQUARE_SIZE)
 menu = Menu(window, SCREEN_WIDTH, SCREEN_HEIGHT)
 
 clock = pygame.time.Clock()
@@ -50,9 +51,9 @@ while True:
 
         if snake.checkForWallCollision(grid.cols, grid.rows) or snake.checkForSelfCollision():
             gameOver = True
-            
+
         if snake.checkFoodCollision(food):
-            food.placeRandom()
+            food.eaten = True
             snake.grow()
             score += 1
 
@@ -74,7 +75,7 @@ while True:
                 if event.key == pygame.K_DOWN:
                     if snake.dir != 'north':
                         snake.dir = 'south'
-                if event.key == pygame.K_RIGHT: 
+                if event.key == pygame.K_RIGHT:
                     if snake.dir != 'west':
                         snake.dir = 'east'
                 if event.key == pygame.K_LEFT:
@@ -88,6 +89,8 @@ while True:
                     if gameOver:
                         gameOver = False
                         score = 0
-                        snake = Snake(snake_pos_x, snake_pos_y, snake_dir, SQUARE_SIZE)
+                        snake = Snake(snake_pos_x, snake_pos_y,
+                                      snake_dir, SQUARE_SIZE)
+                        food.placeRandom()
 
     pygame.display.update()
